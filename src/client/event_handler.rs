@@ -280,7 +280,15 @@ pub trait EventHandler {
     /// Dispatched when a user joins, leaves or moves a voice channel.
     ///
     /// Provides the guild's id (if available) and
+    /// the old and the new state of the guild's voice channels.
+    #[cfg(feature = "cache")]
+    fn voice_state_update(&self, _ctx: Context, _: Option<GuildId>, _old: Option<VoiceState>, _new: VoiceState) {}
+
+    /// Dispatched when a user joins, leaves or moves a voice channel.
+    ///
+    /// Provides the guild's id (if available) and
     /// the new state of the guild's voice channels.
+    #[cfg(not(feature = "cache"))]
     fn voice_state_update(&self, _ctx: Context, _: Option<GuildId>, _: VoiceState) {}
 
     /// Dispatched when a guild's webhook is updated.
